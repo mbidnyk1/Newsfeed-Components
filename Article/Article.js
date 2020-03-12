@@ -85,6 +85,15 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'How To Use The HTML Drag-And-Drop API In React',
+    date: 'Feb 19th. 2020',
+    firstParagraph: `In the current context, we will be dragging files from outside the browser. On dropping the file(s), we put them on a list and display their names. With the files in hand, we could then perform some other operation on the file(s), e.g. upload them to a cloud server. `,
+
+    secondParagraph: `In this tutorial, we’ll be focusing on how to implement the action of dragging and dropping in a React application. If what you need is a plain JavaScript implementation, perhaps you’d first like to read “How To Make A Drag-And-Drop File Uploader With Vanilla JavaScript,” an excellent tutorial written by Joseph Zimmerman not too long ago.`,
+
+    thirdParagraph: `There are eight different drag-and-drop events. Each one fires at a different stage of the drag-and-drop operation. In this tutorial, we’ll focus on the four that are fired when an item is dropped into a drop zone: dragenter, dragleave, dragover and drop`
   }
 ];
 
@@ -107,7 +116,7 @@ const data = [
 
   Step 3: return the entire component.
 
-  Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+  Step 4: Map over the data, creating a component for each object and add each component to the DOM as children of the 'articles' div.
 
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
@@ -133,14 +142,23 @@ function createArticle(title,date,firstParagraph,secondParagraph,thirdParagraph)
   article.classList.add('article');
   articleDate.classList.add('date');
   button.classList.add('expandButton')
+  article.classList.add('article-open');
   //set text content
   articleTitle.textContent = title;
   articleDate.textContent = date;
   articleContent1.textContent = firstParagraph;
   articleContent2.textContent = secondParagraph;
   articleContent3.textContent = thirdParagraph;
+  button.textContent = '\u25bc';
   //add event listener to expandButton span
-  
-  
+  button.addEventListener('click', (event) => {
+    console.log('button click', event.target);
+    article.classList.toggle('article-open');
+  })
   return article;
 }
+
+data.map(item => {
+  document.querySelector('.articles').append(
+    createArticle(item.title, item.date, item.firstParagraph, item.secondParagraph, item.thirdParagraph))
+})
